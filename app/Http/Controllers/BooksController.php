@@ -7,24 +7,22 @@ use App\Models\Book;
 
 class BooksController extends Controller
 {
-    public function store(StoreRequest $request) {
-        $data = $request->validate([
-            'title' => 'required',
-            'author' => 'required',
-        ]);
-
-        $book = Book::create($data);
+    public function store()
+    {
+        $book = Book::create($this->validateRequest());
 
         return redirect($book->path());
     }
 
-    public function updated(Book $book) {
+    public function updated(Book $book)
+    {
         $book->update($this->validateRequest());
 
         return redirect($book->path());
     }
 
-    public function destroy(Book $book) {
+    public function destroy(Book $book)
+    {
         $book->delete();
 
         return redirect('/books');
@@ -34,7 +32,7 @@ class BooksController extends Controller
     {
         return request()->validate([
             'title' => 'required',
-            'author' => 'required',
+            'author_id' => 'required',
         ]);
     }
 }
