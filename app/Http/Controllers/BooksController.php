@@ -13,11 +13,21 @@ class BooksController extends Controller
             'author' => 'required',
         ]);
 
-        Book::create($data);
+        $book = Book::create($data);
+
+        return redirect($book->path());
     }
 
     public function updated(Book $book) {
         $book->update($this->validateRequest());
+
+        return redirect($book->path());
+    }
+
+    public function destroy(Book $book) {
+        $book->delete();
+
+        return redirect('/books');
     }
 
     protected function validateRequest()
